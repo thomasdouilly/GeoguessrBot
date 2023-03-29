@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="stylesheet" href="popup.css" />
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+     <script src="leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+
+    <title>GeoguessrBot</title>
+</head>
+<body>
+
+    <div class="input">
+    <h1> GeoguessrBot</h1>
+    </div>
+    <div class="input">
+    <img src = "https://upload.wikimedia.org/wikipedia/commons/3/3f/GeoGuessr_logo.svg" style="width:75px;height:25px;">
+    <span class="vertical-line"></span>
+    <img src = "https://www.pressonline.com/illuin-technology/files/2019/08/xlogo-illuin-technology.png.pagespeed.ic.MEntoh-jX8.webp" style="width:100px;height:25px;">
+    </div>
+
+    <hr align = CENTER width ="150">
+
+    <div class="input">
+    <input class="screen" type="button" id = "load" value="Add a Picture to the Model">
+    </div>
+
+    <div class="input">
+    <input class="reset" type="button" id = "reset" value="Reset Pictures">
+    </div>
+
+    <hr align = CENTER width ="150">
+
+    <p id="coordDisplayer"></p>
+    
+    <div class="input">
+    <input class="favorite styled" type="button" id = "launch" value="Compute Coordinates">
+    </div>
+
+    <div class = "alert" id = "validation"></div>
+
+    <hr align = CENTER width ="150">
+
+    <div class="input">
+    <input class="favorite styled" type="button" id = "display" value="Show on Google Maps" disabled>
+    </div>
+
+    <hr align = CENTER width ="50">
+
+    <div id="map"></div>
+
+    <hr align = CENTER width ="50">
+
+    <div class="input">
+    <input class="favorite styled" type="button" id = "submit" value="Auto Submission" disabled>
+    <input class="favorite styled" type="button" id = "autopin" value="Autopin" disabled>
+    </div>
+
+    <script src="actions.js"></script>
+</body>
+</html>

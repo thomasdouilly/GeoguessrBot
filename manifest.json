@@ -1,0 +1,30 @@
+{
+    "name": "GeoGuesser Solver with Recent Approaches",
+    "description": "Allows the user to use the most recent geolocation algorithms for his current Geoguessr round.",
+    "version": "0.1",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches":["https://www.geoguessr.com/game/*"], 
+        "js": ["autopin.js"],
+        "css": ["popup.css"]
+      }
+    ],
+    "host_permissions": [
+      "<all_urls>", 
+      "http://127.0.0.1:8000/"
+    ],
+    "permissions": [
+      "webRequest",
+      "notifications",
+      "storage",
+      "activeTab", 
+      "scripting"
+    ]
+  }

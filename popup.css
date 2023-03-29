@@ -1,0 +1,68 @@
+body {
+    width : 300px;
+    height : 495px;
+
+    border-width:2px 2px 2px 2px;
+    border-style:solid;
+    border-color:black black;
+    padding:0 10px;
+ }
+
+h1 {
+    font-family : 'Futura';
+    display : inline-block;
+    width:230px;
+    height:25px;
+    text-align: center;
+}
+
+input {
+    background-color : darkgray;
+    color: white;
+    font-family: Helvetica, sans-serif;
+    display : inline-block;
+    width:230px;
+    height:20px;
+}
+
+#reset {
+    color: brown;
+}
+
+#submit {
+    color: blue;
+}
+
+#map { 
+    height: 200px;
+    width: 300px;
+    display : inline-block; 
+}
+
+.screen {
+    width:180px;
+}
+
+.reset {
+    width:50px;
+}
+
+.input{
+    text-align: center;
+}
+
+.alert{
+    text-align: center;
+    color: brown;
+}
+
+.vertical-line{
+    border-left: 2px solid grey;
+    display: inline-block;
+    height: 25px;
+    margin: 0 5px;
+  }
+
+img.huechange{ 
+    filter: hue-rotate(120deg);
+}
