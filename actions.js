@@ -53,8 +53,7 @@ async function compute_coords() {
             .then(() => {document.getElementById('load').disabled = false})
             .then(() => {document.getElementById('launch').disabled = false})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {map.setView(coords.coords, 1)})})
-            //.then(() => {chrome.storage.sync.get('intermediate').then((coord_list) => {alert(coord_list.indermediate.length) 
-            //    if (coord_list.intermediate.length > 1) { for (coord of coord_list.intermediate) {L.marker(coord).addTo(map)._icon.classList.add("huechange");}};})})
+            .then(() => {chrome.storage.sync.get('intermediate').then((coord_list) => {if (coord_list.intermediate[0].length > 1) { for (coord of coord_list.intermediate[0]) {L.marker(coord).addTo(map)._icon.classList.add("huechange");}};})})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {L.marker(coords.coords).addTo(map).bindPopup("<b>Prediction</b><br>Here is the predicted point").openPopup()})})
             .then(() => {document.getElementById('validation').innerHTML = ''})
         }
@@ -74,7 +73,6 @@ async function open_maps() {
 
 async function guess() {
     
-    alert('Ca marhce')
     function guess_location(lat, lng, token) {
         const xhr = new XMLHttpRequest();
         // post url is going to be the current game url
