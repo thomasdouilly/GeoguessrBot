@@ -8,7 +8,6 @@ import sys
 import ast
 import numpy as np
 from scipy.stats import median_abs_deviation
-from collections import Counter
 
 def get_all_files(dir_path):
     files = []
@@ -17,23 +16,6 @@ def get_all_files(dir_path):
             files.append(os.path.join(root, filename))
     return files
 
-def haversine_mean(list_coords, weights, R=6378.137):
-    '''
-    The haversine formula determines the great-circle distance between two points on a sphere given their longitudes and latitudes.
-    '''
-    x = R * np.cos(list_coords[:, 0]) * np.cos(list_coords[:, 1])
-    y = R * np.cos(list_coords[:, 0]) * np.sin(list_coords[:, 1])
-    z = R * np.sin(list_coords[:, 0])
-
-    x_mean = np.average(x, weights=weights, axis=0)
-    y_mean = np.average(y, weights=weights, axis=0)
-    z_mean = np.average(z, weights=weights, axis=0)
-
-    # Convert the mean x, y, and z coordinates back to latitude and longitude values
-    mean_lat = np.arcsin(z_mean / R)
-    mean_lon = np.arctan2(y_mean, x_mean)
-
-    return (np.degrees(mean_lat), np.degrees(mean_lon))
 
 def main():
     
@@ -87,27 +69,20 @@ def main():
 		with open(dir_geo + '\\output_agg.csv', 'r') as f:
 			lines = f.readlines()
 			coordinates = [ast.literal_eval(line.split(';')[1]) for line in lines]
-   			countries = [line.split(';')[2].replace("\n", "") for line in lines]
+   
 		coordinates = np.asarray(coordinates)
-		print(f'Coordinates:\n{coordinates}\n')
-		
-		# Weight the predictions depending on the country
-		most_common_country = Counter(countries).most_common(1)[0][0]
-	        weights_countries = [1.5 if c == most_common_country else 1 for c in countries]
-	        print(f'Countries weights: {weights_countries}\n')
+		print(coordinates)
 	
 		# Remove any potential outliers using the Z-score:
 		median = np.median(coordinates, axis=0)
 		mad = median_abs_deviation(coordinates, axis=0) + 1e-10
 		modif_z_scores = 0.6745*np.abs(coordinates - median) / mad
-		print(f'Z-scores for each coordinates:\n{modif_z_scores}\n')
+		print(modif_z_scores)
 		threshold = 3.5
-		index_no_outliers = (modif_z_scores < threshold).all(axis=1)
-		coordinates = coordinates[index_no_outliers]
-		weights_countries = [weights_countries[i] for i in range(len(weights_countries)) if index_no_outliers[i]]
-
+		coordinates = coordinates[(modif_z_scores < threshold).all(axis=1)]
+	
 		# Calculate the average of the remaining coordinates
-		avg_coordinate = haversine_mean(np.radians(coordinates), np.array(weights_countries))
-		print(f"Average coordinate using the haversine distance: {avg_coordinate}")
+		avg_coordinate = np.mean(coordinates, axis=0)
+		print(f"Average coordinate: {avg_coordinate}")
 		with open(dir_geo + '\\output.csv', "w") as f:
 			f.write(f'{avg_coordinate[0]},{avg_coordinate[1]}')
