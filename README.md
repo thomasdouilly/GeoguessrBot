@@ -18,7 +18,8 @@ conda activate geoestimation-github-pytorch
 ### Optionnal resources downloading
 
 For some resources and depending on your connection speed, it may be faster to download them directly from the url and to place them in the appropriate directory.
-/!\ Do not forget to rename them if you do so e.g epoch.014-val_loss.18.4833.ckpt -> epoch=014-val_loss=18.4833.ckpt
+
+:warning: Do not forget to rename them if you do so e.g epoch.014-val_loss.18.4833.ckpt -> epoch=014-val_loss=18.4833.ckpt
 
 ```
 mkdir -p models/base_M
@@ -55,12 +56,12 @@ git checkout original_tf
 python downloader.py
 ```
 
-make sure all zip files unzip correctly. If an error like this "urllib.error.HTTPError: HTTP Error 403: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature." occurs, you can still download manually the zip file from the url and unzip it at the right place.
+Make sure all zip files unzip correctly. If an error like this "urllib.error.HTTPError: HTTP Error 403: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature." occurs, you can still download manually the zip file from the url and unzip it at the right place.
 
 ### Docker container: build and run
 
-Check first that Docker Desktop is running.
-Add RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC in the dockerfile
+- Check first that Docker Desktop is running.
+- Add RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC in the dockerfile
 
 ```
 docker build C:\Users\douil\OneDrive\Bureau\Codes\GeoEstimation -t geoestimation_container
