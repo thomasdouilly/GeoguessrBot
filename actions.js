@@ -1,5 +1,3 @@
-//alert(JSON.parse(localStorage.getItem('intermediate')).intermediate[0].length);
-
 if (localStorage.getItem('coords') === null) {
     map_coords = [48.7101051, 2.1673017];
     var map = L.map('map').setView(map_coords, 16);
@@ -9,13 +7,6 @@ if (localStorage.getItem('coords') === null) {
     var map = L.map('map').setView(map_coords, 1);
     L.marker(map_coords).addTo(map).bindPopup("<b>Prediction</b><br>Previous located point").openPopup();
 
-    coord_list = JSON.parse(localStorage.getItem('intermediate')).intermediate[0];
-    if (coord_list.length > 1) {
-        for (coord of coord_list) {
-            L.marker(coord).addTo(map)._icon.classList.add("huechange")
-        }
-    };
-    
     document.getElementById('display').disabled = false;
     document.getElementById('submit').disabled = false;
     document.getElementById('autopin').disabled = false;
@@ -62,16 +53,10 @@ async function compute_coords() {
             .then(() => {document.getElementById('load').disabled = false})
             .then(() => {document.getElementById('launch').disabled = false})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {map.setView(coords.coords, 1)})})
+            //.then(() => {chrome.storage.sync.get('intermediate').then((coord_list) => {alert(coord_list.indermediate.length) 
+            //    if (coord_list.intermediate.length > 1) { for (coord of coord_list.intermediate) {L.marker(coord).addTo(map)._icon.classList.add("huechange");}};})})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {L.marker(coords.coords).addTo(map).bindPopup("<b>Prediction</b><br>Here is the predicted point").openPopup()})})
             .then(() => {document.getElementById('validation').innerHTML = ''})
-            .then(() => {
-                coord_list = JSON.parse(localStorage.getItem('intermediate')).intermediate[0];
-                if (coord_list.length > 1) {
-                    for (coord of coord_list) {
-                        L.marker(coord).addTo(map)._icon.classList.add("huechange")
-                    }
-                };
-            });
         }
     );
 
@@ -88,7 +73,8 @@ async function open_maps() {
 }
 
 async function guess() {
-
+    
+    alert('Ca marhce')
     function guess_location(lat, lng, token) {
         const xhr = new XMLHttpRequest();
         // post url is going to be the current game url
@@ -109,8 +95,8 @@ async function guess() {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         
         const geo_url = tabs[0].url;
-        token = geo_url.split('/')[4];
-
+        token = geo_url.split('/')[5];
+    
         guess_location(lat, long, token);
 
         localStorage.clear();
