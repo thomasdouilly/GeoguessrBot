@@ -1,3 +1,4 @@
+
 import docker
 import subprocess
 import re
@@ -103,6 +104,7 @@ def main():
 		median = np.median(coordinates, axis=0)
 		mad = median_abs_deviation(coordinates, axis=0) + 1e-10
 		modif_z_scores = 0.6745*np.abs(coordinates - median) / mad
+		print(f'Z-scores for each coordinates:\n{modif_z_scores}\n')
 		print(f'Z-scores for each coordinates:\n{modif_z_scores}\n')
 		threshold = 3.5
 		index_no_outliers = (modif_z_scores < threshold).all(axis=1)
