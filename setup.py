@@ -3,7 +3,7 @@ from cx_Freeze import setup, Executable
 base = None
 executables = [Executable("launch.py", base=base)]
 
-packages = ["os", "subprocess"]
+packages = ["os", "subprocess", "requests"]
 options = {
     'build_exe': {    
         'packages':packages,
