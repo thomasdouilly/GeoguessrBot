@@ -73,11 +73,10 @@ async function open_maps() {
 
 async function guess() {
     
-    function guess_location(lat, lng, token) {
+    function guess_location(lat, lng, token, game_type) {
         const xhr = new XMLHttpRequest();
         // post url is going to be the current game url
         const post_url = "https://www.geoguessr.com/api/v3/games/" + token;
-        
         xhr.open("POST", post_url);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         
@@ -93,9 +92,9 @@ async function guess() {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         
         const geo_url = tabs[0].url;
-        token = geo_url.split('/')[5];
+        url_as_list = geo_url.split('/');
     
-        guess_location(lat, long, token);
+        guess_location(lat, long, url_as_list[5], url_as_list[4]);
 
         localStorage.clear();
         chrome.runtime.sendMessage("reload");

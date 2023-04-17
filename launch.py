@@ -14,6 +14,7 @@ os.system('pip install mouse')
 os.system('pip install pyautogui')
 os.system('pip install chardet')
 os.system('pip install docker')
+os.system('pip install scipy')
 
 open('leaflet.js', 'wb').write(requests.get('https://unpkg.com/leaflet@1.9.3/dist/leaflet.js', allow_redirects=True).content)
 
