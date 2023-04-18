@@ -9,7 +9,7 @@ if (localStorage.getItem('coords') === null) {
 
     document.getElementById('display').disabled = false;
     document.getElementById('submit').disabled = false;
-    document.getElementById('autopin').disabled = false;
+    //document.getElementById('autopin').disabled = false;
 }
 
 
@@ -49,7 +49,6 @@ async function compute_coords() {
             .then(() => {alert("Thanks for waiting ! The model has succesfully calculated his prediction for this point. You may close this window.");})
             .then(() => {document.getElementById('display').disabled = false})
             .then(() => {document.getElementById('submit').disabled = false})
-            .then(() => {document.getElementById('autopin').disabled = false})
             .then(() => {document.getElementById('load').disabled = false})
             .then(() => {document.getElementById('launch').disabled = false})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {map.setView(coords.coords, 1)})})
@@ -136,5 +135,5 @@ open_btn.addEventListener('click', open_maps);
 var guess_btn = document.getElementById('submit');
 guess_btn.addEventListener('click', guess);
 
-var autopin_btn = document.getElementById('autopin');
-autopin_btn.addEventListener('click', autopin);
+//var autopin_btn = document.getElementById('autopin');
+//autopin_btn.addEventListener('click', autopin);
