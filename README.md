@@ -53,7 +53,7 @@ python launch.py
 
 You can now go to https://www.geoguessr.com and play while interacting with the extension.
 
-Please not that the computation time of the coordinates can take some time depending on the number of screenshots you took.
+⚠️ Please not that the computation time of the coordinates can take some time depending on the number of screenshots you took.
 
 ## Stop and replay
 
