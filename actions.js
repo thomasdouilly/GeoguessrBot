@@ -1,5 +1,3 @@
-//alert(JSON.parse(localStorage.getItem('intermediate')).intermediate[0].length);
-
 if (localStorage.getItem('coords') === null) {
     map_coords = [48.7101051, 2.1673017];
     var map = L.map('map').setView(map_coords, 16);
@@ -9,16 +7,9 @@ if (localStorage.getItem('coords') === null) {
     var map = L.map('map').setView(map_coords, 1);
     L.marker(map_coords).addTo(map).bindPopup("<b>Prediction</b><br>Previous located point").openPopup();
 
-    coord_list = JSON.parse(localStorage.getItem('intermediate')).intermediate[0];
-    if (coord_list.length > 1) {
-        for (coord of coord_list) {
-            L.marker(coord).addTo(map)._icon.classList.add("huechange")
-        }
-    };
-    
     document.getElementById('display').disabled = false;
     document.getElementById('submit').disabled = false;
-    document.getElementById('autopin').disabled = false;
+    //document.getElementById('autopin').disabled = false;
 }
 
 
@@ -58,20 +49,12 @@ async function compute_coords() {
             .then(() => {alert("Thanks for waiting ! The model has succesfully calculated his prediction for this point. You may close this window.");})
             .then(() => {document.getElementById('display').disabled = false})
             .then(() => {document.getElementById('submit').disabled = false})
-            .then(() => {document.getElementById('autopin').disabled = false})
             .then(() => {document.getElementById('load').disabled = false})
             .then(() => {document.getElementById('launch').disabled = false})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {map.setView(coords.coords, 1)})})
+            .then(() => {chrome.storage.sync.get('intermediate').then((coord_list) => {if (coord_list.intermediate[0].length > 1) { for (coord of coord_list.intermediate[0]) {L.marker(coord).addTo(map)._icon.classList.add("huechange");}};})})
             .then(() => {chrome.storage.sync.get('coords').then((coords) => {L.marker(coords.coords).addTo(map).bindPopup("<b>Prediction</b><br>Here is the predicted point").openPopup()})})
             .then(() => {document.getElementById('validation').innerHTML = ''})
-            .then(() => {
-                coord_list = JSON.parse(localStorage.getItem('intermediate')).intermediate[0];
-                if (coord_list.length > 1) {
-                    for (coord of coord_list) {
-                        L.marker(coord).addTo(map)._icon.classList.add("huechange")
-                    }
-                };
-            });
         }
     );
 
@@ -88,12 +71,11 @@ async function open_maps() {
 }
 
 async function guess() {
-
-    function guess_location(lat, lng, token) {
+    
+    function guess_location(lat, lng, token, game_type) {
         const xhr = new XMLHttpRequest();
         // post url is going to be the current game url
         const post_url = "https://www.geoguessr.com/api/v3/games/" + token;
-        
         xhr.open("POST", post_url);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         
@@ -109,9 +91,9 @@ async function guess() {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         
         const geo_url = tabs[0].url;
-        token = geo_url.split('/')[4];
-
-        guess_location(lat, long, token);
+        url_as_list = geo_url.split('/');
+    
+        guess_location(lat, long, url_as_list[5], url_as_list[4]);
 
         localStorage.clear();
         chrome.runtime.sendMessage("reload");
@@ -153,5 +135,5 @@ open_btn.addEventListener('click', open_maps);
 var guess_btn = document.getElementById('submit');
 guess_btn.addEventListener('click', guess);
 
-var autopin_btn = document.getElementById('autopin');
-autopin_btn.addEventListener('click', autopin);
+//var autopin_btn = document.getElementById('autopin');
+//autopin_btn.addEventListener('click', autopin);
