@@ -21,19 +21,32 @@ conda env create -f environment.yml
 conda activate geoestimation-github-pytorch
 git checkout original_tf
 python downloader.py
+move ..\inference.py .
 ```
 
 Make sure all zip files unzip correctly. If an error like this `urllib.error.HTTPError: HTTP Error 403: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.` occurs, you can still download manually the zip file from the url, unzip it at the right place, and re-execute the command.
 
 ### Build the Docker container
 
+To continue the installation of GeoguessrBot, we will need to set up a Docker container. 
+
 - Check first that Docker Desktop is running.
+
+Then, it is needed to follow one of the two following methods (The second one shall be prefered) :
+
+#### Use a manually built Docker container (To be done at each use of GeoguessrBot)
+
+- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are uncommented and that lines 53 to 55 are commented
 - Manually add `RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC` in the Dockerfile within the GeoEstimation folder just before `RUN apt-get update`.
 
 ```
 docker build C:\your_path_to_GeoEstimation_folder -t geoestimation_container
 docker run --volume C:\your_path_to_GeoguessrBot_folder\GeoEstimation:/src --volume C:\your_path_to_GeoguessrBot_folder\data\picture:/img -it geoestimation_container bash
 ```
+
+#### Use an automatically built Docker container (To be done once at installing)
+
+- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are commented and that lines 53 to 55 are uncommented
 
 ## Chrome extension
 
