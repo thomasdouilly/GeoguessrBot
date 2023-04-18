@@ -29,7 +29,7 @@ def reload(_):
 def screen_capture(_):
 
     geo_picture = pyautogui.screenshot()
-    geo_picture.save('../data/picture/geo_picture-' + str(rd.randint(0, 1e+12)) +'.png')
+    geo_picture.save('./data/picture/geo_picture-' + str(rd.randint(0, 1e+12)) +'.png')
 
     keyboard.press_and_release('f11')
     
@@ -37,11 +37,11 @@ def screen_capture(_):
 
 def reset_pictures(_):
     
-    files = os.listdir('../data/picture')
+    files = os.listdir('./data/picture')
     
     for file in files:
 
-        os.remove('../data/picture/' + file)
+        os.remove('./data/picture/' + file)
     
     return JsonResponse({})
 
@@ -55,7 +55,7 @@ def process(_):
     
     data = {}
     
-    reader = csv.reader(open('../data/output.csv', 'r'), delimiter=';')
+    reader = csv.reader(open('./data/output.csv', 'r'), delimiter=';')
     
     for row in reader:
 
@@ -70,7 +70,7 @@ def process(_):
             data["longitude"] = long
             data["latitude"] = lat
         
-    reader = csv.reader(open('../data/output_agg.csv', 'r'), delimiter=';')
+    reader = csv.reader(open('./data/output_agg.csv', 'r'), delimiter=';')
 
     intermediate_coords = []
     
