@@ -12,6 +12,8 @@ The bot is composed of 2 main parts:
 
 To do so, please make sure you have an appropriate conda environment configured with python 3.8 (PATH variables etc.) and a Github account.
 
+⚠️ Don't forget to change the absolute file paths.
+
 ```
 git clone https://github.com/thomasdouilly/GeoguessrBot.git
 git clone https://github.com/TIBHannover/GeoEstimation.git
@@ -31,22 +33,26 @@ Make sure all zip files unzip correctly. If an error like this `urllib.error.HTT
 To continue the installation of GeoguessrBot, we will need to set up a Docker container. 
 
 - Check first that Docker Desktop is running.
+- Manually add `RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC` in the Dockerfile within the GeoEstimation folder just before `RUN apt-get update`.
+
+```
+docker build C:\your_path_to_GeoEstimation_folder -t geoestimation_container
+```
 
 Then, it is needed to follow one of the two following methods (The second one shall be prefered) :
 
 #### Use a manually built Docker container (To be done at each use of GeoguessrBot)
 
-- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are uncommented and that lines 53 to 55 are commented
-- Manually add `RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC` in the Dockerfile within the GeoEstimation folder just before `RUN apt-get update`.
+- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are uncommented and that lines 53 to 55 are commented.
+- Open a new shell window.
 
 ```
-docker build C:\your_path_to_GeoEstimation_folder -t geoestimation_container
 docker run --volume C:\your_path_to_GeoguessrBot_folder\GeoEstimation:/src --volume C:\your_path_to_GeoguessrBot_folder\data\picture:/img -it geoestimation_container bash
 ```
 
 #### Use an automatically built Docker container (To be done once at installing)
 
-- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are commented and that lines 53 to 55 are uncommented
+- In file geoguessr-commands/inference_kaggle.py, make sure that lines 46-47 and 50 are commented and that lines 53 to 55 are uncommented.
 
 ## Chrome extension
 
@@ -57,7 +63,7 @@ docker run --volume C:\your_path_to_GeoguessrBot_folder\GeoEstimation:/src --vol
 - Enable Developer mode.
 - Click on *Load unpacked* and select the GeoguessrBot folder.
 - Pin the GeoguessrBot extension in the jigsaw icon in the top right corner of your window.
-- Open a new shell page.
+- Open a new shell window.
 
 ```
 cd C:\your_path_to_GeoguessrBot_folder
